@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SAM - The mirror for smart people</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/weather-icons.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+
+<h2 class="center-align">SAM User Configuration</h2>
+<div class="container" id="config-page">
+	<div class="row">
+		<div class="col s12 center-align">
+			<img class="diagram" src="css/locationDiagram.jpg">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12 m6 input-field">
+			<select name="spot1" id="spot1">
+				<option value="">N/A</option>
+			</select>
+			<label for="spot1">Spot #1 Widget: </label>
+		</div>
+
+		<div class="col s12 m6 input-field">
+			<select name="spot2" id="spot2">
+				<option value="">N/A</option>
+			</select>
+			<label for="spot2">Spot #2 Widget: </label>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12 m6 input-field">
+			<select name="spot3" id="spot3">
+				<option value="">N/A</option>
+			</select>
+			<label for="spot3">Spot #3 Widget: </label>
+		</div>
+
+		<div class="col s12 m6 input-field">
+			<select name="spot4" id="spot4">
+				<option value="">N/A</option>
+			</select>
+			<label for="spot4">Spot #4 Widget: </label>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12 m6 input-field">
+			<select name="spot5" id="spot5">
+				<option value="">N/A</option>
+			</select>
+			<label for="spot5">Spot #5 Widget: </label>
+		</div>
+
+		<div class="col s12 m6 input-field">
+			<select name="spot6" id="spot6">
+				<option value="">N/A</option>
+			</select>
+			<label for="spot6">Spot #6 Widget: </label>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12 m6 input-field">
+			<select name="spot7" id="spot7">
+				<option value="">N/A</option>
+			</select>
+			<label for="spot7">Spot #7 Widget: </label>
+		</div>
+
+		<div class="col s12 m6 input-field">
+			<select name="spot8" id="spot8">
+				<option value="">N/A</option>
+			</select>
+			<label for="spot8">Spot #8 Widget: </label>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12 m6">
+			<label for="darkskyapi">DarkSky (Weather) API Key: </label>
+			<input type="text" placeholder="API Key" name="darkskyapi" id="darkskyapi">
+		</div>
+		<div class="col s12 m6">
+			<label for="weatherCoordinates">Weather Coordinates (use comma separated values): </label>
+			<input type="text" placeholder="latitude,longitude" value="" name="weatherCoordinates" id="weatherCoordinates">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12 m6">
+			<label for="youtubeapi">Youtube API Key: </label>
+			<input type="text" placeholder="Youtube API Key" value="" name="youtubeapi" id="youtubeapi">
+		</div>
+		<div class="col s12 m6">
+			<label for="stockslist">Stocks List (use comma separated values): </label>
+			<input type="text" placeholder="Stocks List" value="" name="stockslist" id="stockslist">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12 m6">
+			<label for="flickrapi">Flickr API Key: </label>
+			<input type="text" placeholder="Flickr API Key" value="" name="flickrapi" id="flickrapi">
+		</div>
+		<div class="col s12 m6">
+			<label for="flickrsecret">Flickr Secret Key: </label>
+			<input type="text" placeholder="Flickr Secret Key" value="" name="flickrsecret" id="flickrsecret">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12 m6">
+			<label for="newsapi">News API Key: </label>
+			<input type="text" placeholder="API Key" value="" name="newsapi" id="newsapi">
+		</div>
+		<div class="col s12 m6">
+			<label for="horoscopelist">Horoscope list (use comma separated values): </label>
+			<input type="text" placeholder="Ex: libra,cancer" value="" name="horoscopelist" id="horoscopelist">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12">
+			<button id="saveconfig" class="btn">Save Config</button>
+		</div>
+	</div>
+</div>
+
+
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+<script src="js/settings.js"></script>
+<script>if (window.module) module = window.module;</script>
+</body>
+
+</html>

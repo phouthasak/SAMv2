@@ -1,0 +1,242 @@
+html, body {
+   height: 100%;
+   width: 100%;
+   margin: 0;
+   padding: 0;
+}
+body {
+	background: #000;
+	color: #fff;
+	position: relative;
+}
+
+div#spot1 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: left;
+}
+div#spot2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	text-align: center;
+}
+div#spot3 {
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-align: right;
+}
+div#spot4 {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin: auto 0;
+  text-align: left;
+}
+div#spot5 {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin: auto 0;
+  text-align: right;
+}
+div#spot6 {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	text-align: left;
+}
+div#spot7 {
+	position: absolute;
+	bottom: 300px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	text-align: center;
+}
+div#spot8 {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	text-align: right;
+}
+
+#weather {
+	margin: 15px;
+	float: left;
+}
+#weather * {
+	font-weight: 200;
+	line-height: 1;
+}
+#weather #temp {
+	margin: 0;
+	font-size: 100px;
+  text-align: right;
+}
+#weather #location {
+	margin: 0;
+	font-size: 40px;
+	text-align: right;
+}
+#weather #wind {
+	margin: 5px 0;
+	font-size: 25px;
+	text-align: right;
+}
+#weather i {
+  font-size: 25px;
+	margin: 0 10px;
+}
+#weather #forecast {
+	float: right;
+	clear: both;
+	text-align: center;
+	margin-top: 15px;
+}
+#weather #forecast * {
+	font-weight: 300;
+	font-size: 15px;
+}
+#weather #forecast .col {
+	padding: 0 5px;
+}
+#weather #forecast .col + .col + .col + .col { padding: 0 0 0 5px; margin-right: -5px; }
+#weather #forecast i {
+	margin: 8px 10px;
+}
+
+#today * {
+	line-height: 1;
+	margin: 15px;
+}
+#today #clock {
+	font-weight: 300;
+	font-size: 90px;
+}
+#today #clock #seconds {
+	font-size: 40px;
+	margin-left: 5px;
+	vertical-align: super;
+}
+#today #clock #ampm {
+	font-size:;
+}
+#today #date {
+	font-size: 50px;
+	font-weight: 200;
+}
+
+#news {
+  text-align: right;
+  float: right;
+  padding: 15px;
+}
+#news .news-header {
+  font-size: 30px;
+  font-weight: 200;
+}
+#news .news-item {
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#news .news-title {
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
+}
+#news .news-desc {
+  width: 500px;
+  overflow: hidden;
+  white-space: normal;
+  font-size: 14px;
+}
+#stocks{
+	margin: 0px 15px 15px 15px;
+	font-weight: 500;
+	max-height: 350px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+#stocks::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+#stocks::-webkit-scrollbar
+{
+	display: none;
+	width: 10px;
+	background-color: #F5F5F5;
+}
+#stocks::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
+}
+#stockHeader{
+	font-size: 20px;
+	margin: 15px 15px 0px 15px;
+}
+#stockList{
+	margin-top: 0px;
+}
+#stockList li{
+	border-top: 1px solid;
+	margin-right: 5px;
+}
+#ootd{
+	margin: 15px;
+	font-size: 20px;
+	font-weight: 200;
+}
+#voice{
+	margin: 15px;
+	font-size: 20px;
+	font-weight: 200;
+	max-height: 450px;
+	overflow: hidden;
+}
+#commands{
+	margin-top: 0px;
+}
+.diagram{
+	height: 200px;
+	width: 200px;
+}
+.img-regular{
+	height: 100px;
+	width: 100px;
+	margin:2.5px;
+}
+.img-small{
+	height: 50px;
+	width: 50px;
+	margin: 2.5px;
+}
+.img-large{
+	height: 300px;
+	width: 300px;
+	margin: 2.5px;
+}
+#horoscope { 
+  max-height: 500px; 
+  padding: 15px;
+}
+#horoscope .hSign {
+  width: 300px;
+  font-size: 30px;
+  font-weight:bolder;
+}
+#horoscope .hText {
+  width: 300px;
+  overflow: hidden;
+}

@@ -1,0 +1,31 @@
+{
+  "name": "smartmirror",
+  "version": "2.0.0",
+  "description": "Project description here",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phouthasak/SAMv2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phouthasak/SAMv2.git"
+  },
+  "homepage": "https://github.com/phouthasak/SAMv2.git#readme",
+  "dependencies": {
+    "async": "^2.3.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.14.0",
+    "flickr-sdk": "^2.0.1",
+    "forecast": "^0.3.2",
+    "ip": "^1.1.5",
+    "superagent-cache": "^1.7.2",
+    "yahoo-finance-data": "^1.0.1",
+    "youtube-search": "^1.0.8"
+  }
+}

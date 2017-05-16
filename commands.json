@@ -1,0 +1,54 @@
+{
+  "command1": {
+    "command": "hello Sam",
+    "description": "Greeting message from voice recognition"
+  },
+  "command2": {
+    "command": "show video of *",
+    "description": "Search for video of choice"
+  },
+  "command3": {
+    "command": "play video",
+    "description": "Start video"
+  },
+  "command4": {
+    "command": "pause video",
+    "description": "Pause video"
+  },
+  "command5": {
+    "command": "stop video",
+    "description": "Stop video"
+  },
+  "command6": {
+    "command": "mute video",
+    "description": "Mute/Unmute video"
+  },
+  "command7": {
+    "command": "clear",
+    "description": "Remove content from feedback area"
+  },
+  "command8": {
+    "command": "show commands",
+    "description": "List available commands"
+  },
+  "command9": {
+    "command": "refresh",
+    "description": "reload page"
+  },
+  "command10":{
+    "command": "hide/show display",
+    "description": "toggle between blank/smart display"
+  },
+  "command11":{
+    "command": "show picture of *",
+    "description": "Search for pictures of choice"
+  },
+  "command12":{
+    "command": "enlarge picture *",
+    "description": "enlarge the specified picture number"
+  },
+  "command13":{
+    "command": "show settings",
+    "description": "show url to SAM's settings"
+  }
+}
