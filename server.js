@@ -8,6 +8,7 @@ var os = require('os');
 var ifaces = os.networkInterfaces();
 var ip = require('ip');
 var async = require('async');
+var apiai = require('apiai');
 
 //node package for news widget
 var superagent = require('superagent-cache')();
@@ -27,6 +28,10 @@ var Flickr = require('flickr-sdk');
 
 //user variables
 var config = require('./config.json');
+
+//node package for API AI
+var ApiAiAccessToken = config['apiaiApiKey'];
+const apiaiApp = apiai(ApiAiAccessToken);
 
 //allow JSON POST and GET variables
 app.use(bodyParser.json());
@@ -122,6 +127,40 @@ app.get('/weather', function(req, res) {
 		}
 		res.send(weatherObject);
 	});
+});
+
+app.get('/ai', function(req, res){
+	var text = req.query.text;
+	var aiText = "";
+	console.log(text);
+	
+	ai = apiaiApp.textRequest(text, {
+        sessionId: 'tabby_cat' // use any arbitrary id
+    });
+
+    ai.on('response', (response) => {
+    	//response.result.fulfillment.action is the intents of the actions requested of the AI
+    	//console.log(response);
+        aiText = response.result.fulfillment.speech;
+        parameters = response.result.parameters.title;
+        test = response.result.action;
+        console.log(aiText);
+        console.log(test);
+        console.log(parameters);
+        res.send(response.result);
+    	//res.send(aiText);
+    });
+
+    ai.on('error', (error) => {
+        console.log(error);
+    });
+
+    ai.end();
+
+	/*sender = event.sender.id;
+    text = event.message.text;
+    console.log(event);
+    */
 });
 
 app.get('/news', function(req, res) {

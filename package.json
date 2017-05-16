@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/phouthasak/SAMv2.git#readme",
   "dependencies": {
+    "apiai": "^4.0.2",
     "async": "^2.3.0",
     "body-parser": "^1.17.1",
     "express": "^4.14.0",
