@@ -44,8 +44,29 @@ function sendToAI(text){
               case 'image.search':
                 showImages(data);
                 break;
+              case 'image.enlarge':
+                enlargePicture(data);
+                break;
               case 'video.search':
                 findVideo(data);
+                break;
+              case 'video.play':
+                playVideo();
+                break;
+              case 'video.pause':
+                pauseVideo();
+                break;
+              case 'video.stop':
+                stopVideo();
+                break;
+              case 'video.mute':
+                muteVideo();
+                break;
+              case 'display.hide':
+                mirrorMode();
+                break;
+              case 'display.reload':
+                reloadPage();
                 break;
               default:
                 loadMessage(responseText);
@@ -109,10 +130,11 @@ function addPictureSlide(pictureData){
   }
 }
 
-function enlargePicture(choice){
-  confirmbeep.play();
+function enlargePicture(aiData){
+  var choice = aiData.parameters.number;
+  var responseText = aiData.fulfillment.speech;
   var filterChoice = commandCorrection(choice);
-  console.log(choice);
+  
   $('#pictures').children('img').each(function(){
       if($(this).hasClass("img-large") || $(this).hasClass("img-regular")){
           $(this).removeClass("img-large");
@@ -179,25 +201,21 @@ function onYouTubeIframeAPIReady() {
 }
 
 function playVideo() {
-  confirmbeep.play();
 	if(player !== null) player.playVideo();
   responsiveVoice.speak("playing video", voicePlaybackPersonel);
 }
 
 function stopVideo() {
-  confirmbeep.play();
   if(player !== null) player.stopVideo();
   responsiveVoice.speak("stoping video", voicePlaybackPersonel);
 }
 
 function pauseVideo() {
-  confirmbeep.play();
   if(player !== null) player.pauseVideo();
   responsiveVoice.speak("pausing video", voicePlaybackPersonel);
 }
 
 function muteVideo(){
-  confirmbeep.play();
   if(player !== null){
 		if(player.isMuted()){
 			player.unMute();
@@ -223,7 +241,6 @@ function clearFeedbackArea(){
 }
 
 function reloadPage(){
-  confirmbeep.play();
   location.reload();
   responsiveVoice.speak("reloading", voicePlaybackPersonel);
 }
@@ -260,7 +277,6 @@ function showCommands() {
 
 /*-----Mirror Mode Commands-----*/
 function mirrorMode(word){
-  confirmbeep.play();
   if($('body').is(':visible') === true){
     responsiveVoice.speak("hiding display", voicePlaybackPersonel);
   }else{
