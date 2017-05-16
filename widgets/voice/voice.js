@@ -7,8 +7,7 @@ var messages = [
     "Long time no see.",
     "You could use a cup of coffee..",
     "Have a splendid day!",
-    "Thanks for using SAM human!",
-    "Great outfit choice!"
+    "Thanks for using SAM"
 ];
 var confirmbeep = new Audio('./widgets/voice/confirm.wav');
 
@@ -16,20 +15,7 @@ loadWelcomeMessage(messages);
 if (annyang) {
   // Add our commands to annyang
   var commands = {
-    'hello (sam)': helloResponse,
-    'show (me) (a) video(s) (of) *videoTitle': findVideo,
-    'pause video': pauseVideo,
-    'stop video': stopVideo,
-    'play video': playVideo,
-    'clear (video)': soloClear,
-    'mute video': muteVideo,
-    'show commands': showCommands,
-    'refresh': reloadPage,
-    '(show) (hide) *word display': mirrorMode,
-    '(show) (hide) *word mirror': mirrorMode,
-    'show (me) (a) picture(s) (of) *picture': showImages,
-    'enlarge picture *choice': enlargePicture,
-    '(show) settings': configURL
+    '*text' : sendToAI
   };
 
   // Add our commands to annyang
@@ -37,6 +23,38 @@ if (annyang) {
 
   // Start listening. You can call this here, or attach this call to an event, button, etc.
   annyang.start();
+}
+
+/*-----API AI-----*/
+function sendToAI(text){
+  confirmbeep.play();
+  console.log(text);
+  $.getJSON({
+        type: 'GET',
+        dataType: "json",
+        async: false,
+        url: '/ai?text=' + text,
+        success: function(data) {
+            var intent = data.action;
+            var responseText = data.fulfillment.speech;
+            console.log(intent);
+            console.log(responseText);
+            console.log(data);
+            switch(intent){
+              case 'image.search':
+                showImages(data);
+                break;
+              case 'video.search':
+                findVideo(data);
+                break;
+              default:
+                loadMessage(responseText);
+                responsiveVoice.speak(responseText);
+                break;
+            }
+            
+        }
+    });
 }
 
 /*-----Welcoming Message-----*/
@@ -48,28 +66,17 @@ function loadWelcomeMessage(messages) {
     responsiveVoice.speak(choice, voicePlaybackPersonel);
 }
 
-/*-----Hello Command-----*/
-function helloResponse() {
-    var messages = [
-        "Hello, how can I assist you?",
-        "SAM at your service.",
-        "How can I help you?"
-    ];
-
-    confirmbeep.play();
-
+/*-----Load Message To Screen-----*/
+function loadMessage(message){
     var htmlId = '#voice';
-    var rand = Math.floor(Math.random() * messages.length);
-    var choice = messages[rand];
-    clearFeedbackArea();
-    $(htmlId).html(choice);
-    responsiveVoice.speak(choice, voicePlaybackPersonel);
+    $(htmlId).html(message);
 }
 
 /*-----Flickr Images Command-----*/
-function showImages(picture){
-  confirmbeep.play();
+function showImages(aiData){
   clearFeedbackArea();
+  var picture = aiData.parameters.title;
+  var responseText = aiData.fulfillment.speech;
   var queryString = encodeURIComponent(picture.trim());
   $('#voice').html('<div id="pictures">Loading Images...</div>');
   $.getJSON({
@@ -79,7 +86,7 @@ function showImages(picture){
         url: '/pictures?subject=' + queryString,
         success: function(data) {
             addPictureSlide(data);
-            responsiveVoice.speak("Showing images of " + picture, voicePlaybackPersonel);
+            responsiveVoice.speak(responseText + " " + picture);
         }
   });
 }
@@ -119,8 +126,9 @@ function enlargePicture(choice){
 }
 
 /*-----Youtube Video Command----*/
-function findVideo(videoTitle) {
-    confirmbeep.play();
+function findVideo(aiData) {
+    var videoTitle = aiData.parameters.title;
+    var responseText = aiData.fulfillment.speech;
     var queryString = encodeURIComponent(videoTitle.trim());
     clearFeedbackArea();
     $('#voice').html('<div id="youtubeIframe">Loading Video...</div>');
@@ -131,7 +139,7 @@ function findVideo(videoTitle) {
         url: '/youtube?subject=' + queryString,
         success: function(data) {
             addVideo(data);
-            responsiveVoice.speak("searching for video of " + videoTitle, voicePlaybackPersonel);
+            responsiveVoice.speak(responseText + " " + videoTitle);
         }
     });
 }
@@ -219,6 +227,7 @@ function reloadPage(){
   location.reload();
   responsiveVoice.speak("reloading", voicePlaybackPersonel);
 }
+
 /*-----Help Commands-----*/
 function showCommands() {
   confirmbeep.play();

@@ -140,7 +140,6 @@ app.get('/ai', function(req, res){
 
     ai.on('response', (response) => {
     	//response.result.fulfillment.action is the intents of the actions requested of the AI
-    	//console.log(response);
         aiText = response.result.fulfillment.speech;
         parameters = response.result.parameters.title;
         test = response.result.action;
@@ -148,7 +147,7 @@ app.get('/ai', function(req, res){
         console.log(test);
         console.log(parameters);
         res.send(response.result);
-    	//res.send(aiText);
+
     });
 
     ai.on('error', (error) => {
@@ -246,7 +245,7 @@ app.get('/ip', function(req, res) {
 	res.send(ip.address());
 });
 
-app.listen(5000, function() {
-	console.log('Server running on port 5000!');
-	console.log('Visit http://localhost:5000 to view.');
+app.listen(8080, function() {
+	console.log('Server running on port 8080!');
+	console.log('Visit http://localhost:8080 to view.');
 });
