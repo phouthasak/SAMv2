@@ -140,12 +140,12 @@ app.get('/ai', function(req, res){
 
     ai.on('response', (response) => {
     	//response.result.fulfillment.action is the intents of the actions requested of the AI
-        aiText = response.result.fulfillment.speech;
+        /*aiText = response.result.fulfillment.speech;
         parameters = response.result.parameters.title;
         test = response.result.action;
         console.log(aiText);
         console.log(test);
-        console.log(parameters);
+        console.log(parameters);*/
         res.send(response.result);
 
     });

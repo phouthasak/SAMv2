@@ -51,22 +51,31 @@ function sendToAI(text){
                 findVideo(data);
                 break;
               case 'video.play':
-                playVideo();
+                playVideo(data);
                 break;
               case 'video.pause':
-                pauseVideo();
+                pauseVideo(data);
                 break;
               case 'video.stop':
-                stopVideo();
+                stopVideo(data);
                 break;
               case 'video.mute':
-                muteVideo();
+                muteVideo(data);
                 break;
               case 'display.hide':
-                mirrorMode();
+                mirrorMode(data);
                 break;
               case 'display.reload':
-                reloadPage();
+                reloadPage(data);
+                break;
+              case 'display.clear':
+                soloClear(data);
+                break;
+              case 'display.setting':
+                configURL(data);
+                break;
+              case 'display.command':
+                showCommands(data);
                 break;
               default:
                 loadMessage(responseText);
@@ -160,7 +169,7 @@ function findVideo(aiData) {
         async: false,
         url: '/youtube?subject=' + queryString,
         success: function(data) {
-            addVideo(data);
+            addVideo(data, aiData);
             responsiveVoice.speak(responseText + " " + videoTitle);
         }
     });
@@ -197,22 +206,23 @@ function onYouTubeIframeAPIReady() {
             'onReady': playVideo
         }
     });
-    console.log("player");
 }
 
 function playVideo() {
 	if(player !== null) player.playVideo();
-  responsiveVoice.speak("playing video", voicePlaybackPersonel);
+  responsiveVoice.speak("Playing Video", voicePlaybackPersonel);
 }
 
-function stopVideo() {
+function stopVideo(aiData) {
+  var responseText = aiData.fulfillment.speech;
   if(player !== null) player.stopVideo();
-  responsiveVoice.speak("stoping video", voicePlaybackPersonel);
+  responsiveVoice.speak(responseText, voicePlaybackPersonel);
 }
 
-function pauseVideo() {
+function pauseVideo(aiData) {
+  var responseText = aiData.fulfillment.speech;
   if(player !== null) player.pauseVideo();
-  responsiveVoice.speak("pausing video", voicePlaybackPersonel);
+  responsiveVoice.speak(responseText, voicePlaybackPersonel);
 }
 
 function muteVideo(){
@@ -228,11 +238,11 @@ function muteVideo(){
 }
 
 /*-----Clean up commands----*/
-function soloClear(){
-  confirmbeep.play();
+function soloClear(aiData){
+  var responseText = aiData.fulfillment.speech;
   player = null;
   $('#voice').empty();
-  responsiveVoice.speak("clearing feedback area", voicePlaybackPersonel);
+  responsiveVoice.speak(responseText, voicePlaybackPersonel);
 }
 
 function clearFeedbackArea(){
@@ -240,16 +250,17 @@ function clearFeedbackArea(){
 	$('#voice').empty();
 }
 
-function reloadPage(){
+function reloadPage(aiData){
+  var responseText = aiData.fulfillment.speech;
   location.reload();
-  responsiveVoice.speak("reloading", voicePlaybackPersonel);
+  responsiveVoice.speak(responseText, voicePlaybackPersonel);
 }
 
 /*-----Help Commands-----*/
-function showCommands() {
-  confirmbeep.play();
+function showCommands(aiData) {
+  var responseText = aiData.fulfillment.speech;
   clearFeedbackArea();
-  responsiveVoice.speak("showing commands", voicePlaybackPersonel);
+  responsiveVoice.speak(responseText, voicePlaybackPersonel);
   $('#voice').html('<div id="commandsWrapper"><ul id="commands"></ul></div>');
   $.getJSON({
       type: 'GET',
@@ -270,13 +281,13 @@ function showCommands() {
   if ($('#commandsWrapper').height() > $('#voice').height()) {
     setInterval(function() {
       start();
-    }, 5000);
+    }, 3500);
 	}
 
 }
 
 /*-----Mirror Mode Commands-----*/
-function mirrorMode(word){
+function mirrorMode(){
   if($('body').is(':visible') === true){
     responsiveVoice.speak("hiding display", voicePlaybackPersonel);
   }else{
@@ -286,13 +297,13 @@ function mirrorMode(word){
 }
 
 /*----- Show Config URL --------*/
-function configURL() {
-  confirmbeep.play();
+function configURL(aiData) {
+  var responseText = aiData.fulfillment.speech;
   clearFeedbackArea();
   $.get('/ip', function(data) {
-    $('#voice').html("Navigate to <strong>http://" + data + ":5000/settings</strong> on any other device to configure me!");
+    $('#voice').html("Navigate to <strong>http://" + data + ":8080/settings</strong> on any other device to configure me!");
   });
-  responsiveVoice.speak("Showing config access point", voicePlaybackPersonel);
+  responsiveVoice.speak(responseText, voicePlaybackPersonel);
 }
 
 
