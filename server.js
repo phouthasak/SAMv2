@@ -7,15 +7,16 @@ var bodyParser = require('body-parser')
 var os = require('os');
 var ifaces = os.networkInterfaces();
 var ip = require('ip');
-var async = require('async');
-var apiai = require('apiai');
+ var async = require('async');
+ var apiai = require('apiai');
 
 //node package for news widget
-var superagent = require('superagent-cache')();
+var superagent = require('superagent');
 
 //node package for stocks widget
-var YahooFinanceAPI = require('yahoo-finance-data');
-var yahooAPI = new YahooFinanceAPI();
+//need to get api key
+// var YahooFinanceAPI = require('yahoo-finance-data');
+// var yahooAPI = new YahooFinanceAPI();
 
 //node package for weather widget
 var forecast = require('forecast');
@@ -80,9 +81,9 @@ app.get('/youtube', function(req,res){
 
 });
 
-app.get('/commands', function(req, res){
-	res.send(JSON.parse(fs.readFileSync('commands.json', 'utf8')));
-});
+// app.get('/commands', function(req, res){
+// 	res.send(JSON.parse(fs.readFileSync('commands.json', 'utf8')));
+// });
 
 app.get('/weather', function(req, res) {
 	var apiKey = config['darkskyApiKey'];
@@ -140,12 +141,12 @@ app.get('/ai', function(req, res){
 
     ai.on('response', (response) => {
     	//response.result.fulfillment.action is the intents of the actions requested of the AI
-        /*aiText = response.result.fulfillment.speech;
+        aiText = response.result.fulfillment.speech;
         parameters = response.result.parameters.title;
         test = response.result.action;
         console.log(aiText);
         console.log(test);
-        console.log(parameters);*/
+        console.log(parameters);
         res.send(response.result);
 
     });
@@ -165,7 +166,7 @@ app.get('/ai', function(req, res){
 app.get('/news', function(req, res) {
 	var apiKey = config['newsApiKey'];
 
-	var uri = "https://newsapi.org/v1/articles?source=google-news&apiKey=";
+	var uri = " ";
 	if(apiKey !== null){
 		superagent
 		  	.get(uri + apiKey)
@@ -246,6 +247,6 @@ app.get('/ip', function(req, res) {
 });
 
 app.listen(8080, function() {
-	console.log('Server running on port 8080!');
-	console.log('Visit http://localhost:8080 to view.');
+	console.log('Server running on port 5000!');
+	console.log('Visit http://localhost:5000 to view.');
 });

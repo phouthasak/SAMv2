@@ -18,15 +18,15 @@
   },
   "homepage": "https://github.com/phouthasak/SAMv2.git#readme",
   "dependencies": {
-    "apiai": "^4.0.2",
-    "async": "^2.3.0",
-    "body-parser": "^1.17.1",
+    "apiai": "^4.0.3",
+    "async": "^2.5.0",
+    "body-parser": "^1.17.2",
     "express": "^4.14.0",
-    "flickr-sdk": "^2.0.1",
+    "flickr-sdk": "^3.2.0",
     "forecast": "^0.3.2",
     "ip": "^1.1.5",
-    "superagent-cache": "^1.7.2",
-    "yahoo-finance-data": "^1.0.1",
-    "youtube-search": "^1.0.8"
+    "superagent-cache": "^2.0.0",
+    "yahoo-finance-data": "^3.2.0",
+    "youtube-search": "^1.0.10"
   }
 }
