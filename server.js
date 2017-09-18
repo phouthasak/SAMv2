@@ -7,8 +7,9 @@ var bodyParser = require('body-parser')
 var os = require('os');
 var ifaces = os.networkInterfaces();
 var ip = require('ip');
- var async = require('async');
- var apiai = require('apiai');
+var async = require('async');
+var apiai = require('apiai');
+var needle = require('needle');
 
 //node package for news widget
 var superagent = require('superagent');
@@ -81,9 +82,20 @@ app.get('/youtube', function(req,res){
 
 });
 
-// app.get('/commands', function(req, res){
-// 	res.send(JSON.parse(fs.readFileSync('commands.json', 'utf8')));
-// });
+app.get('/makeDir', function(req, res){
+	var folderName = req.query.folderName;
+	var workingDir = __dirname + "/widgets/profiles/" + folderName;
+	if(!fs.existsSync(workingDir)){
+		fs.mkdir(workingDir);
+		res.send("Dir created");
+	}else{
+		res.send("Dir Exist");
+	}
+});
+
+app.get('/commands', function(req, res){
+	res.send(JSON.parse(fs.readFileSync('commands.json', 'utf8')));
+});
 
 app.get('/weather', function(req, res) {
 	var apiKey = config['darkskyApiKey'];
@@ -198,6 +210,33 @@ app.get('/horoscope', function(req, res) {
 	})
 });
 
+app.get('/faceCompare', function(req, res) {
+	//Below are manual example (don't work)
+	var apiKey = config['facePlusPlusKey'];
+	var apiSecret = config['facePlusPlusSecret'];
+	
+	var targetImage = fs.readFileSync(path.resolve(__dirname + "/widgets/profiles/phouthasak/target.jpg"));
+	var refImage = fs.readFileSync(path.resolve(__dirname + "/widgets/profiles/phouthasak/ref.jpg"));
+	var uri = "https://api-us.faceplusplus.com/facepp/v3/compare?" + "api_key=" + apiKey + "&api_secret=" + apiSecret + "&image_file1=@image_file1&image_file2=@image_file2";
+	//var uri = "https://api-us.faceplusplus.com/facepp/v3/detect?" + "api_key=" + apiKey + "&api_secret=" + apiSecret + "&image_file=@image_file";
+
+	// needle.post(uri, data, {mutipart: true}, function(err, response, body){
+	// 	res.send(body);
+	// });
+
+	superagent
+		.post(uri)
+		.attach('image_file1', targetImage, 'target.jpg')
+		.attach('image_file2', refImage, 'ref.jpg')
+		.end(function(err, response){
+			res.send(response);
+		});
+});
+
+app.get('/test', function(req, res){
+	res.send(fs.readFile("./css/target.jpg"));
+});
+
 app.get('/stocks', function(req, res) {
 	var stockList = config['stocksList'];
 
@@ -247,6 +286,6 @@ app.get('/ip', function(req, res) {
 });
 
 app.listen(8080, function() {
-	console.log('Server running on port 5000!');
-	console.log('Visit http://localhost:5000 to view.');
+	console.log('Server running on port 8080!');
+	console.log('Visit http://localhost:8080 to view.');
 });

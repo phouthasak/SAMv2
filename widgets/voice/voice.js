@@ -94,6 +94,7 @@ function loadWelcomeMessage(messages) {
     var choice = messages[rand];
     $(htmlId).html(choice);
     responsiveVoice.speak(choice, voicePlaybackPersonel);
+    responsiveVoice.speak("Hello Christian", voicePlaybackPersonel);
 }
 
 /*-----Load Message To Screen-----*/

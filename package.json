@@ -25,8 +25,12 @@
     "flickr-sdk": "^3.2.0",
     "forecast": "^0.3.2",
     "ip": "^1.1.5",
+    "needle": "^2.0.1",
     "superagent-cache": "^2.0.0",
     "yahoo-finance-data": "^3.2.0",
     "youtube-search": "^1.0.10"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
   }
 }
