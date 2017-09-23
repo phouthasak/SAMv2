@@ -211,18 +211,13 @@ app.get('/horoscope', function(req, res) {
 });
 
 app.get('/faceCompare', function(req, res) {
-	//Below are manual example (don't work)
 	var apiKey = config['facePlusPlusKey'];
 	var apiSecret = config['facePlusPlusSecret'];
 	
 	var targetImage = fs.readFileSync(path.resolve(__dirname + "/widgets/profiles/phouthasak/target.jpg"));
 	var refImage = fs.readFileSync(path.resolve(__dirname + "/widgets/profiles/phouthasak/ref.jpg"));
-	var uri = "https://api-us.faceplusplus.com/facepp/v3/compare?" + "api_key=" + apiKey + "&api_secret=" + apiSecret + "&image_file1=@image_file1&image_file2=@image_file2";
-	//var uri = "https://api-us.faceplusplus.com/facepp/v3/detect?" + "api_key=" + apiKey + "&api_secret=" + apiSecret + "&image_file=@image_file";
-
-	// needle.post(uri, data, {mutipart: true}, function(err, response, body){
-	// 	res.send(body);
-	// });
+	var uri = "https://api-us.faceplusplus.com/facepp/v3/compare?" + "api_key=" + apiKey + "&api_secret=" + apiSecret;// + "&image_file1=image_file1&image_file2=image_file2";
+	//var uri = "https://api-us.faceplusplus.com/facepp/v3/detect?" + "api_key=" + apiKey + "&api_secret=" + apiSecret;
 
 	superagent
 		.post(uri)
