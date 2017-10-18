@@ -9,7 +9,7 @@ var ifaces = os.networkInterfaces();
 var ip = require('ip');
 var async = require('async');
 var apiai = require('apiai');
-var needle = require('needle');
+//var needle = require('needle');
 
 //node package for news widget
 var superagent = require('superagent');

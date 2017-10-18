@@ -1,5 +1,5 @@
 //global variables for youtube player
-var player = null, vidID, done = false;
+var player = null, vidID, done = false, displayMode = true;
 var voicePlaybackPersonel = "UK English Female";
 var messages = [
     "Good morning!",
@@ -20,13 +20,14 @@ if (annyang) {
 
   // Add our commands to annyang
   annyang.addCommands(commands);
-
+  
   // Start listening. You can call this here, or attach this call to an event, button, etc.
   annyang.start();
 }
 
 /*-----API AI-----*/
 function sendToAI(text){
+
   confirmbeep.play();
   console.log(text);
   $.getJSON({
@@ -62,6 +63,12 @@ function sendToAI(text){
               case 'video.mute':
                 muteVideo(data);
                 break;
+              case 'display.sleep':
+                sleepMode(true, data);
+                break;
+              case 'display.wake':
+                sleepMode(false, data);
+                break;
               case 'display.hide':
                 mirrorMode(data);
                 break;
@@ -78,7 +85,6 @@ function sendToAI(text){
                 showCommands(data);
                 break;
               default:
-                loadMessage(responseText);
                 responsiveVoice.speak(responseText);
                 break;
             }
@@ -92,9 +98,9 @@ function loadWelcomeMessage(messages) {
     var htmlId = '#voice';
     var rand = Math.floor(Math.random() * messages.length);
     var choice = messages[rand];
-    $(htmlId).html(choice);
+    //$(htmlId).html(choice);
     responsiveVoice.speak(choice, voicePlaybackPersonel);
-    responsiveVoice.speak("Hello Christian", voicePlaybackPersonel);
+    //responsiveVoice.speak("Happy national boyfriend day, Johnny.", voicePlaybackPersonel);
 }
 
 /*-----Load Message To Screen-----*/
@@ -289,12 +295,32 @@ function showCommands(aiData) {
 
 /*-----Mirror Mode Commands-----*/
 function mirrorMode(){
-  if($('body').is(':visible') === true){
+  if(displayMode === true){
     responsiveVoice.speak("hiding display", voicePlaybackPersonel);
+    displayMode = false;
   }else{
     responsiveVoice.speak("Showing display", voicePlaybackPersonel);  
+    displayMode = true;
   }
-  $('body').toggle("slow");
+  $('#spot1').toggle("slow");
+  $('#spot2').toggle("slow");
+  $('#spot3').toggle("slow");
+  $('#spot4').toggle("slow");
+  $('#spot5').toggle("slow");
+  $('#spot6').toggle("slow");
+  $('#spot7').toggle("slow");
+  $('#spot8').toggle("slow");
+}
+
+function sleepMode(mode, data){
+  mirrorMode();
+  $('#screensaver').empty();
+  if(mode === true) {
+    $('#screensaver').append('<img class="screensaver" src="css/screensaver.gif">')
+    responsiveVoice.speak(data.fulfillment.speech, voicePlaybackPersonel);   
+  }else{
+    responsiveVoice.speak(data.fulfillment.speech, voicePlaybackPersonel);
+  };
 }
 
 /*----- Show Config URL --------*/
