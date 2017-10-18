@@ -8,10 +8,6 @@ var os = require('os');
 var ifaces = os.networkInterfaces();
 var ip = require('ip');
 var async = require('async');
-var apiai = require('apiai');
-//var needle = require('needle');
-
-//node package for news widget
 var superagent = require('superagent');
 
 //node package for stocks widget
@@ -32,6 +28,7 @@ var Flickr = require('flickr-sdk');
 var config = require('./config.json');
 
 //node package for API AI
+var apiai = require('apiai');
 var ApiAiAccessToken = config['apiaiApiKey'];
 const apiaiApp = apiai(ApiAiAccessToken);
 
@@ -79,7 +76,6 @@ app.get('/youtube', function(req,res){
       res.send(result);
   	});
   }
-
 });
 
 app.get('/makeDir', function(req, res){
@@ -168,11 +164,6 @@ app.get('/ai', function(req, res){
     });
 
     ai.end();
-
-	/*sender = event.sender.id;
-    text = event.message.text;
-    console.log(event);
-    */
 });
 
 app.get('/news', function(req, res) {
