@@ -1,5 +1,5 @@
 //global variables for youtube player
-var player = null, vidID, done = false, displayMode = true;
+var player = null, vidID, sleepMode = false, displayMode = true;
 var voicePlaybackPersonel = "UK English Female";
 var messages = [
     "Good morning!",
@@ -27,7 +27,6 @@ if (annyang) {
 
 /*-----API AI-----*/
 function sendToAI(text){
-
   confirmbeep.play();
   console.log(text);
   $.getJSON({
@@ -41,54 +40,54 @@ function sendToAI(text){
             console.log(intent);
             console.log(responseText);
             console.log(data);
-            switch(intent){
-              case 'image.search':
-                showImages(data);
-                break;
-              case 'image.enlarge':
-                enlargePicture(data);
-                break;
-              case 'video.search':
-                findVideo(data);
-                break;
-              case 'video.play':
-                playVideo(data);
-                break;
-              case 'video.pause':
-                pauseVideo(data);
-                break;
-              case 'video.stop':
-                stopVideo(data);
-                break;
-              case 'video.mute':
-                muteVideo(data);
-                break;
-              case 'display.sleep':
-                sleepMode(true, data);
-                break;
-              case 'display.wake':
-                sleepMode(false, data);
-                break;
-              case 'display.hide':
-                mirrorMode(data);
-                break;
-              case 'display.reload':
-                reloadPage(data);
-                break;
-              case 'display.clear':
-                soloClear(data);
-                break;
-              case 'display.setting':
-                configURL(data);
-                break;
-              case 'display.command':
-                showCommands(data);
-                break;
-              default:
-                responsiveVoice.speak(responseText);
-                break;
+            if(!sleepMode){
+                switch(intent){
+                case 'image.search':
+                  showImages(data);
+                  break;
+                case 'image.enlarge':
+                  enlargePicture(data);
+                  break;
+                case 'video.search':
+                  findVideo(data);
+                  break;
+                case 'video.play':
+                  playVideo(data);
+                  break;
+                case 'video.pause':
+                  pauseVideo(data);
+                  break;
+                case 'video.stop':
+                  stopVideo(data);
+                  break;
+                case 'video.mute':
+                  muteVideo(data);
+                  break;
+                case 'display.sleep':
+                  setSleepMode(data);
+                  break;
+                case 'display.hide':
+                  mirrorMode(data);
+                  break;
+                case 'display.reload':
+                  reloadPage(data);
+                  break;
+                case 'display.clear':
+                  soloClear(data);
+                  break;
+                case 'display.setting':
+                  configURL(data);
+                  break;
+                case 'display.command':
+                  showCommands(data);
+                  break;
+                default:
+                  responsiveVoice.speak(responseText);
+                  break;
+                }
+            }else if(sleepMode && intent === 'display.wake'){
+              setSleepMode(data);
             }
-            
         }
     });
 }
@@ -312,15 +311,21 @@ function mirrorMode(){
   $('#spot8').toggle("slow");
 }
 
-function sleepMode(mode, data){
-  mirrorMode();
-  $('#screensaver').empty();
-  if(mode === true) {
-    $('#screensaver').append('<img class="screensaver" src="css/screensaver.gif">')
-    responsiveVoice.speak(data.fulfillment.speech, voicePlaybackPersonel);   
-  }else{
+function setSleepMode(data){
+  if(sleepMode){
+    //wake
+    mirrorMode();
+    $('#screensaver').empty();
     responsiveVoice.speak(data.fulfillment.speech, voicePlaybackPersonel);
-  };
+    sleepMode = false;
+  }else{
+    //go to sleep
+    mirrorMode();
+    $('#screensaver').empty();  
+    $('#screensaver').append('<img class="screensaver" src="css/screensaver.gif">');
+    responsiveVoice.speak(data.fulfillment.speech, voicePlaybackPersonel);
+    sleepMode = true;
+  }
 }
 
 /*----- Show Config URL --------*/
