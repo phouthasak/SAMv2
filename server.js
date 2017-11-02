@@ -1,4 +1,5 @@
 //required modules
+var https = require('https');
 var express = require("express");
 var app = express();
 var path = require("path");
@@ -10,6 +11,10 @@ var ip = require('ip');
 var async = require('async');
 var superagent = require('superagent');
 
+var httpsOption = {
+	cert: fs.readFileSync(path.join(__dirname, 'ssl', 'server.crt')),
+	key: fs.readFileSync(path.join(__dirname, 'ssl', 'server.key')),
+}
 //node package for stocks widget
 //need to get api key
 // var YahooFinanceAPI = require('yahoo-finance-data');
@@ -169,7 +174,7 @@ app.get('/ai', function(req, res){
 app.get('/news', function(req, res) {
 	var apiKey = config['newsApiKey'];
 
-	var uri = " ";
+	var uri = "https://newsapi.org/v1/articles?source=google-news&apiKey=";
 	if(apiKey !== null){
 		superagent
 		  	.get(uri + apiKey)
@@ -219,10 +224,6 @@ app.get('/faceCompare', function(req, res) {
 		});
 });
 
-app.get('/test', function(req, res){
-	res.send(fs.readFile("./css/target.jpg"));
-});
-
 app.get('/stocks', function(req, res) {
 	var stockList = config['stocksList'];
 
@@ -266,12 +267,16 @@ app.post('/config', function(req, res) {
 	});
 });
 
+app.post('/upload', function(req, res){
+	res.send("Success");
+});
 
 app.get('/ip', function(req, res) {
 	res.send(ip.address());
 });
 
-app.listen(8080, function() {
-	console.log('Server running on port 8080!');
-	console.log('Visit http://localhost:8080 to view.');
+https.createServer(httpsOption, app)
+	.listen(8080, function() {
+		console.log('Server running on port 8080!');
+		console.log('Visit https://localhost:8080 to view.');
 });

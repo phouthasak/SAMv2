@@ -333,7 +333,7 @@ function configURL(aiData) {
   var responseText = aiData.fulfillment.speech;
   clearFeedbackArea();
   $.get('/ip', function(data) {
-    $('#voice').html("Navigate to <strong>http://" + data + ":8080/settings</strong> on any other device to configure me!");
+    $('#voice').html("Navigate to <strong>https://" + data + ":8080/settings</strong> on any other device to configure me!");
   });
   responsiveVoice.speak(responseText, voicePlaybackPersonel);
 }
