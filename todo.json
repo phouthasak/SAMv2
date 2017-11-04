@@ -1,0 +1,18 @@
+{
+  "task1": {
+    "task": "Go to Work",
+    "done": false
+  },
+  "task2": {
+    "task": "Cook",
+    "done": false
+  },
+  "task3": {
+    "task": "Get a Girl Friend",
+    "done": false
+  },
+  "task4": {
+    "task": "This task is done",
+    "done": true
+  }
+}

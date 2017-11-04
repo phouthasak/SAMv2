@@ -97,6 +97,10 @@ app.get('/commands', function(req, res){
 	res.send(JSON.parse(fs.readFileSync('commands.json', 'utf8')));
 });
 
+app.get('/todo', function(req,res){
+	res.send(JSON.parse(fs.readFileSync('todo.json', 'utf8')));
+});
+
 app.get('/weather', function(req, res) {
 	var apiKey = config['darkskyApiKey'];
 	var coor = config['weatherCoordinates'];
