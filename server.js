@@ -16,9 +16,8 @@ var httpsOption = {
 	key: fs.readFileSync(path.join(__dirname, 'ssl', 'server.key')),
 }
 //node package for stocks widget
-//need to get api key
-// var YahooFinanceAPI = require('yahoo-finance-data');
-// var yahooAPI = new YahooFinanceAPI();
+//dead till I can find a good source alternative to yahoo or google finance
+//var googleStocks = require('google-stocks');
 
 //node package for weather widget
 var forecast = require('forecast');
@@ -186,7 +185,8 @@ app.get('/news', function(req, res) {
 	}
 });
 
-app.get('/horoscope', function(req, res) {
+//dead till I can find alternatives
+/*app.get('/horoscope', function(req, res) {
 	var signs = config['horoscopeSigns'];
 	var uri = "http://horoscope-api.herokuapp.com/horoscope/today/"
 	var horoscopeObject = {"entries":[]};
@@ -204,7 +204,7 @@ app.get('/horoscope', function(req, res) {
 	    if (err) console.error(err.message);
 	    res.send(horoscopeObject);
 	})
-});
+});*/
 
 app.get('/faceCompare', function(req, res) {
 	var apiKey = config['facePlusPlusKey'];
@@ -224,15 +224,19 @@ app.get('/faceCompare', function(req, res) {
 		});
 });
 
-app.get('/stocks', function(req, res) {
+/*app.get('/stocks', function(req, res) {
 	var stockList = config['stocksList'];
 
 	if(stockList !== null){
-		yahooAPI.getQuote(stockList).then(function(result){
-			res.send(result.quote);
-		});
+		googleStocks(stockList)
+			.then(function(data){
+				console.log(data);
+			})
+			.catch(function(error){
+				console.log(error);
+			});
 	}
-});
+});*/
 
 app.get('/config', function(req, res) {
 	config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
