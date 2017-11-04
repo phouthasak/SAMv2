@@ -2,16 +2,17 @@ var headlines = [];
 var limit = 5;
 
 $.get('/news', function(response){
+  var source = response.source;
   $.each(response.articles, function(i){
     headlines[i] = response.articles[i];
   });
 
-  addNewsWidget(headlines);
+  addNewsWidget(headlines, source);
 });
 
-function addNewsWidget(headlines) {
+function addNewsWidget(headlines, newSource) {
   var i = 0;
-  $('#news').append('<div class="news-header"">Lastest in <strong>Google News<strong></div>');
+  $('#news').append('<div class="news-header"">Lastest in <strong>' + newSource.toUpperCase() +'<strong></div>');
   $('#news').append('<div class="news-item" style="display:none;"><div class="news-title"></div><div class="news-desc"></div></div>');
   $('#news .news-title').html(headlines[i].title);
   if (headlines[i].description !== 'null') {

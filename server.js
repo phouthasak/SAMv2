@@ -172,8 +172,8 @@ app.get('/ai', function(req, res){
 
 app.get('/news', function(req, res) {
 	var apiKey = config['newsApiKey'];
-
-	var uri = "https://newsapi.org/v1/articles?source=google-news&apiKey=";
+	var newsSource = config['newsSource'];
+	var uri = "https://newsapi.org/v1/articles?source=" + newsSource +"&sortBy=top&apiKey=";
 	if(apiKey !== null){
 		superagent
 		  	.get(uri + apiKey)
