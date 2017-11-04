@@ -60,7 +60,7 @@ function addWidget(weather){
 	var temp = 0;
 
 	$('#weather #temp').html(Math.ceil(parseInt(weather.today.temperature)) + "&deg;F");
-	$('#weather #location').html("Toledo, OH");
+	$('#weather #location').html("Lewis Center, OH");
 	$('#weather #wind').html(weather.today.weatherDescription);
 	$('#weather #wind').prepend("<i class='wi wi-forecast-io-"+weather.today.icon+"'></i>");
 
