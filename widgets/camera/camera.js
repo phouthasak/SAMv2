@@ -2,16 +2,12 @@ $(document).ready(function(){
 	var width = 350;
 	var height = 0;
 
-	var streaming = false;
-	
-  	var canvas = null;
-  	var photo = null;
-  	var startbutton = null;
+	var streaming = false;	
+  var canvas = null;
+  var photo = null;
 
-	$('#camera').html(`
-		<video id="test"></video>
-	`);
-	var video = $('#test')[0];
+	$('#camera').html('<video id="webcam"></video><canvas id="canvasPic" width="'+ width + '" height="'+ height +'" style="display: none;"></canvas>');
+	var video = $('#webcam')[0];
 	
 	navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||

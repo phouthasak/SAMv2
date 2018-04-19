@@ -81,6 +81,14 @@ function sendToAI(text){
                 case 'display.command':
                   showCommands(data);
                   break;
+                case 'camera.picture':
+                  takePicture(data);
+                  break;
+                case 'camera.profile':
+                  detectProfile(data);
+                  break;
+                case 'camera.save':
+                  savePhoto(data);
                 default:
                   responsiveVoice.speak(responseText);
                   break;
@@ -241,6 +249,36 @@ function muteVideo(){
       responsiveVoice.speak("video muted", voicePlaybackPersonel);
 		}
 	}
+}
+
+
+/*-----Camera Commands-----*/
+function takePicture(aiData){
+  var width = 350;
+  var video = $('#webcam')[0];
+  var canvas = $('#canvasPic')[0];
+  var context = canvas.getContext('2d');
+  var height = video.videoHeight / (video.videoWidth/width)
+  var data;
+  $('#canvasPic').eq(0).show();
+  if(width && height){
+    canvas.width = width;
+    canvas.height = height;
+    context.drawImage(video, 0, 0, width, height);
+    clearFeedbackArea();
+    data = canvas.toDataURL('image/png');
+    $('#voice').html('<img id="tempImage" src=""/>');
+    $('#tempImage').attr('src', data);
+    $('#canvasPic').eq(0).hide();
+  }
+}
+
+function savePhoto(aiData){
+  console.log('test');
+}
+
+function detectProfile(aiData){
+  console.log('test');
 }
 
 /*-----Clean up commands----*/
