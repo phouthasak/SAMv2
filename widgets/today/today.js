@@ -44,7 +44,7 @@ var todayWidget = function(){
 		},
 		renderDate: function(){
 			todayWidget.updateDate();
-			setInterval('updateDate()', 600000);
+			setInterval('todayWidget.updateDate()', 600000);
 		},
 		updateDate: function(){
 			var date = new Date();

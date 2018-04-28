@@ -11,7 +11,6 @@ var weatherWidget = function(){
 			async: true,
 			url: '/weather',
 			success: function(data){
-					console.log(data);
 					weatherWidget.setWeatherData(data);
 					weatherWidget.wrapperSetup();
 				}

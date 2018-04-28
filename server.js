@@ -15,9 +15,6 @@ var httpsOption = {
 	cert: fs.readFileSync(path.join(__dirname, 'ssl', 'server.crt')),
 	key: fs.readFileSync(path.join(__dirname, 'ssl', 'server.key')),
 }
-//node package for stocks widget
-//dead till I can find a good source alternative to yahoo or google finance
-//var googleStocks = require('google-stocks');
 
 //node package for weather widget
 var forecast = require('forecast');
@@ -55,14 +52,18 @@ app.get('/settings', function(req, res) {
 
 app.get('/pictures', function(req, res){
 	var pictureQuery = req.query.subject;
-	var flickr = new Flickr({
-		"apiKey": config['flickrApiKey'],
-		"apiSecret": config['flickSecret']
-	});
+	var flickr = new Flickr(config['flickrApiKey']);
 
-	flickr.request().media().search(pictureQuery).get({page: 1, per_page: 5, media: 'photos'}).then(function (response) {
-		res.send(response.body.photos.photo);
-	});
+	
+	flickr.photos.search({text: pictureQuery, page: 1, per_page: 5, media: 'photos'})
+		.then(function(response){
+			res.send(response.body.photos.photo);
+		}).catch(function(response){
+			console.log(response);
+		});
+	// flickr.request().media().search(pictureQuery).get({page: 1, per_page: 5, media: 'photos'}).then(function (response) {
+	// 	res.send(response.body.photos.photo);
+	// });
 });
 
 app.get('/youtube', function(req,res){
@@ -228,19 +229,33 @@ app.get('/faceCompare', function(req, res) {
 		});
 });
 
-/*app.get('/stocks', function(req, res) {
-	var stockList = config['stocksList'];
+app.get('/stocks', function(req, res) {
+// https://www.alphavantage.co/documentation/
+	var stocksList = config['stocksList'];
 
-	if(stockList !== null){
-		googleStocks(stockList)
-			.then(function(data){
-				console.log(data);
-			})
-			.catch(function(error){
-				console.log(error);
-			});
+	if(stocksList != null){
+		var uri = "https://www.alphavantage.co/query?function=";
+		var stocksObject = {"entries":[]};
+		var queryFunction = "BATCH_STOCK_QUOTES";
+		var stockUriList = "";
+
+		for(var i = 0; i < stocksList.length; i++){
+			if(i == stocksList.length - 1){
+				stockUriList = stockUriList + stocksList[i];
+			}else{
+				stockUriList = stockUriList +stocksList[i] + ",";
+			}
+		}
+
+		superagent
+		  	.get(uri + queryFunction + "&symbols="+ stockUriList + "&apikey=" + config['alphaVantageApiKey'])
+		  	.end(function (err, response){
+				// console.log(uri + queryFunction + "&symbols="+ stockUriList + "&apikey=" + config['alphaVantageApiKey']);
+				res.send(response.body['Stock Quotes']);
+	  		}
+		);
 	}
-});*/
+});
 
 app.get('/config', function(req, res) {
 	config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
