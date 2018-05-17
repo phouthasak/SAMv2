@@ -298,8 +298,7 @@ app.get('/ip', function(req, res) {
 	res.send(ip.address());
 });
 
-https.createServer(httpsOption, app)
-	.listen(8080, function() {
+https.createServer(httpsOption, app).listen(8080, function() {
 		console.log('Server running on port 8080!');
 		console.log('Visit https://localhost:8080 to view.');
 });

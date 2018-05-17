@@ -2,6 +2,8 @@
 var voiceWidget = function(){
   var voicePlaybackPersonel = "UK English Female";
   var confirmbeep = new Audio('./widgets/voice/confirm.wav');
+  var sendCommand = false;
+  var timer = 5;
   return {
     getVoicePlayBackPersonel: voicePlaybackPersonel,
     setSleepMode: function(sleep){
@@ -17,7 +19,13 @@ var voiceWidget = function(){
       if (annyang) {
         // Add our commands to annyang
         var commands = {
+          'Hello Sam': function(){
+            console.log(sendCommand);
+            sendCommand = true;
+            setTimeout(function(){ sendCommand = false;console.log(sendCommand);}, 5000);
+            },
           '*text' : voiceWidget.sendToAI
+          }
         };
 
         // Add our commands to annyang
@@ -25,83 +33,84 @@ var voiceWidget = function(){
   
         // Start listening. You can call this here, or attach this call to an event, button, etc.
         annyang.start();
-      }
-    },
+      },
     sendToAI: function(text){
-      confirmbeep.play();
-      console.log(text);
-      $.getJSON({
-        type: 'GET',
-        dataType: "json",
-        async: true,
-        url: '/ai?text=' + text,
-        success: function(data) {
-            var intent = data.action;
-            var responseText = data.fulfillment.speech;
-            console.log(intent);
-            console.log(responseText);
-            console.log(data);
-            if(!utilWidget.getSleepMode){
-                switch(intent){
-                case 'image.search':
-                  imageWidget.showImages(data);
-                  break;
-                case 'image.enlarge':
-                  imageWidget.enlargePicture(data);
-                  break;
-                case 'video.search':
-                  youtubeWidget.findVideo(data);
-                  break;
-                case 'video.play':
-                  youtubeWidget.playVideo(data);
-                  break;
-                case 'video.pause':
-                  youtubeWidget.pauseVideo(data);
-                  break;
-                case 'video.stop':
-                  youtubeWidget.stopVideo(data);
-                  break;
-                case 'video.mute':
-                  youtubeWidget.muteVideo(data);
-                  break;
-                case 'display.sleep':
-                  utilWidget.setSleepMode(data);
-                  break;
-                case 'display.hide':
-                  utilWidget.mirrorMode(data);
-                  break;
-                case 'display.reload':
-                  utilWidget.reloadPage(data);
-                  break;
-                case 'display.clear':
-                  utilWidget.soloClear(data);
-                  break;
-                case 'display.setting':
-                  utilWidget.configURL(data);
-                  break;
-                case 'display.command':
-                  utilWidget.showCommands(data);
-                  break;
-                case 'camera.picture':
-                  cameraWidget.takePicture(data);
-                  break;
-                case 'camera.profile':
-                  cameraWidget.detectProfile(data);
-                  break;
-                case 'camera.save':
-                  cameraWidget.savePhoto(data);
-                default:
-                  responsiveVoice.speak(responseText);
-                  break;
-                }
-            }else if(utilWidget.getSleepMode && intent === 'display.wake'){
-              utilWidget.setSleepMode(data);
+      console.log(sendCommand);
+      if(sendCommand){
+        confirmbeep.play();
+        console.log(text);
+        $.getJSON({
+          type: 'GET',
+          dataType: "json",
+          async: true,
+          url: '/ai?text=' + text,
+          success: function(data) {
+              var intent = data.action;
+              var responseText = data.fulfillment.speech;
+              console.log(intent);
+              console.log(responseText);
+              console.log(data);
+              if(!utilWidget.getSleepMode){
+                  switch(intent){
+                  case 'image.search':
+                    imageWidget.showImages(data);
+                    break;
+                  case 'image.enlarge':
+                    imageWidget.enlargePicture(data);
+                    break;
+                  case 'video.search':
+                    youtubeWidget.findVideo(data);
+                    break;
+                  case 'video.play':
+                    youtubeWidget.playVideo(data);
+                    break;
+                  case 'video.pause':
+                    youtubeWidget.pauseVideo(data);
+                    break;
+                  case 'video.stop':
+                    youtubeWidget.stopVideo(data);
+                    break;
+                  case 'video.mute':
+                    youtubeWidget.muteVideo(data);
+                    break;
+                  case 'display.sleep':
+                    utilWidget.setSleepMode(data);
+                    break;
+                  case 'display.hide':
+                    utilWidget.mirrorMode(data);
+                    break;
+                  case 'display.reload':
+                    utilWidget.reloadPage(data);
+                    break;
+                  case 'display.clear':
+                    utilWidget.soloClear(data);
+                    break;
+                  case 'display.setting':
+                    utilWidget.configURL(data);
+                    break;
+                  case 'display.command':
+                    utilWidget.showCommands(data);
+                    break;
+                  case 'camera.picture':
+                    cameraWidget.takePicture(data);
+                    break;
+                  case 'camera.profile':
+                    cameraWidget.detectProfile(data);
+                    break;
+                  case 'camera.save':
+                    cameraWidget.savePhoto(data);
+                  default:
+                    responsiveVoice.speak(responseText);
+                    break;
+                  }
+              }else if(utilWidget.getSleepMode && intent === 'display.wake'){
+                utilWidget.setSleepMode(data);
+              }
             }
-        }
-      });
-    }, 
+          });
+      }
+    }
   }
 }();
-
 voiceWidget.loadScripts();
 voiceWidget.startVoice();
