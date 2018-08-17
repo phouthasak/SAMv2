@@ -20,9 +20,11 @@ var voiceWidget = function(){
         // Add our commands to annyang
         var commands = {
           'Hello Sam': function(){
+            confirmbeep.play();
+            utilWidget.setListeningMode(true);
             console.log(sendCommand);
             sendCommand = true;
-            setTimeout(function(){ sendCommand = false;console.log(sendCommand);}, 5000);
+            setTimeout(function(){ sendCommand = false;console.log(sendCommand);utilWidget.setListeningMode(false)}, 5000);
             },
           '*text' : voiceWidget.sendToAI
           }

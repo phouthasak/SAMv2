@@ -41,6 +41,15 @@ var utilWidget = function(){
     			sleepMode = true;
   			}
 		},
+    setListeningMode: function(listening){
+      if(listening){
+          //start listening
+          $('#listeningIcon').append('<img class="listening" src="css/listening.gif">');
+        }else{
+          //stop listening
+          $('#listeningIcon').empty();  
+        }
+    },
 		loadWelcomeMessage: function(){
 			var htmlId = '#voice';
     		var rand = Math.floor(Math.random() * messages.length);

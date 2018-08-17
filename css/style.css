@@ -289,3 +289,17 @@ div#spot8 {
 #todoList li{
 	margin-right: 5px;
 }
+
+#listeningIcon{
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: : 300px;
+	height: 300px;
+	margin-left: -150px;
+   	margin-top: -150px;
+}
+
+.listening{
+	width:20em;
+}

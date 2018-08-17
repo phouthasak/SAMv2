@@ -43,21 +43,22 @@ var youtubeWidget = function(){
 		},
 		stopVideo: function(aiData) {
   			var responseText = aiData.fulfillment.speech;
-  			if(player !== null) player.stopVideo();
+  			if(youtubeWidget.player !== null) youtubeWidget.player.stopVideo();
   			responsiveVoice.speak(responseText, voiceWidget.voicePlaybackPersonel);
 		},
 		pauseVideo: function(aiData) {
+        console.log(aiData.fulfillment.speech);
   			var responseText = aiData.fulfillment.speech;
-  			if(player !== null) player.pauseVideo();
+  			if(youtubeWidget.player !== null) youtubeWidget.player.pauseVideo();
   			responsiveVoice.speak(responseText, voiceWidget.voicePlaybackPersonel);
 		},
 		muteVideo: function(){
-  			if(player !== null){
-				if(player.isMuted()){
-				player.unMute();
+  			if(youtubeWidget.player !== null){
+				if(youtubeWidget.player.isMuted()){
+				youtubeWidget.player.unMute();
       			responsiveVoice.speak("video unmuted", voiceWidget.voicePlaybackPersonel);
 				}else{
-				player.mute();
+				youtubeWidget.player.mute();
       			responsiveVoice.speak("video muted", voiceWidget.voicePlaybackPersonel);
 				}
 			}
